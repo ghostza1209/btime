@@ -6,29 +6,33 @@
           </button>
         <div class=" navbar-collapse pull-right" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link " href="#">Sign in</a>
+                <a class="nav-item nav-link" @click="destroy">Log out</a>
             </div>
         </div>
     </nav>
 </template>
 
 <script>
-    export default {
-    
+export default {
+  methods: {
+    destroy() {
+        this.$store.dispatch("destroy");
     }
+  }
+};
 </script>
 
 <style scoped>
-    a.navbar-brand img {
-        width: 50px;
-        background-color: rgba(255, 255, 255, 1);
-        padding: 10px 13px;
-        border-radius: 40px;
-    }
-    div#navbarNavAltMarkup{
-        justify-content: flex-end;
-    }
-    a{
-        color: white;
-    }
+a.navbar-brand img {
+  width: 50px;
+  background-color: rgba(255, 255, 255, 1);
+  padding: 10px 13px;
+  border-radius: 40px;
+}
+div#navbarNavAltMarkup {
+  justify-content: flex-end;
+}
+a {
+  color: white;
+}
 </style>

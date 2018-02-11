@@ -1,6 +1,6 @@
 "use strict";
 <template>
-<div>
+<div class="col-sm-12">
    <router-link to="addEmployee" class="btn btn-primary">เพิ่มพนักงาน</router-link>
   <table class="table">
   <thead>
@@ -78,5 +78,7 @@ export default {
 };
 </script>
 <style scoped>
-
+div {
+  margin-top: 30px;
+}
 </style>

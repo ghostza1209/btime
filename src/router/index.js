@@ -3,12 +3,16 @@ import Router from 'vue-router'
 import employee from '@/components/employee/employee'
 import addEmployee from '@/components/employee/addEmp'
 import editEmployee from '@/components/employee/editEmp'
+import dashboard from '@/components/dashboard'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    // dynamic segments start with a colon
+  routes: [{
+      path: '/',
+      name: 'dashboard',
+      component: dashboard
+    },
     {
       path: '/employee',
       name: 'employee',
