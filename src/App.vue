@@ -36,7 +36,7 @@ export default {
       return this.$store.getters.getUser;
     }
   },
-  created() {
+  created() { //เมื่อมีการเข้าครั้งแรก จะเรียกใช้ทันที 
     this.loadUser;
   }
 };

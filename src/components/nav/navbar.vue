@@ -5,7 +5,7 @@
             <span class="navbar-toggler-icon"></span>
           </button>
         <div class=" navbar-collapse pull-right" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
+            <div class="navbar-nav" v-show="getStatus">
                 <a class="nav-item nav-link" @click="destroy">Log out</a>
             </div>
         </div>
@@ -16,7 +16,16 @@
 export default {
   methods: {
     destroy() {
-        this.$store.dispatch("destroy");
+      this.$store.dispatch("destroy");
+    }
+  },
+  computed: {
+    getStatus() {
+      if (this.$store.getters.getUser !== 204) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 };
