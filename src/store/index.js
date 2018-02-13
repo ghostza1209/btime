@@ -8,64 +8,61 @@ Vue.use(Vuex)
 
 
 export const store = new Vuex.Store({
+  strict: true,
   state: {
     user: null,
-    status: 204,
-    error: false
+    error: null,
+    token: null,
+    isLogin: false
   },
   mutations: {
-    getUser(state, data) {
-      state.user = data.userData
-      state.status = data.status
-      // console.log(state.user,state.status)
+    setUser(state, data) {
+      state.user = data
+      state.isLogin = true
     },
     destroy(state) {
-      state.user = null
-      state.status = 204
-      window.location.href= "/"
+      state.user = null,
+        state.isLogin = false
+      window.location.href = "/"
     },
-    checkLogin(state){
-      if(state.user != "" && state.status == 204){
-        state.error = true
-      }else{
-        state.error = false
-      }
+    hasErr(state, err) {
+      state.error = err
     }
   },
   actions: {
-    getUser(state, payload) {
-      axios
-        .post("http://localhost:3000/login/", payload)
+    async getUser({
+      commit
+    }, payload) {
+      const response = await axios
+        .post("http://localhost:3000/login", payload)
         .then(response => {
-          console.log(response)
-          if(response.data.status == 204){
-            var status = response.data.status = 204
-          }else{
-            var status = response.status
+
+          if (response.data.error) {
+            const err = response.data.error
+            commit('hasErr', err)
+          } else {
+            const user = {
+              username: response.data.username,
+              password: response.data.password
+            }
+            commit('setUser', user)
           }
-          const user = {
-            userData: response.data,
-            status: status
-          }
-          console.log(user)
-          state.commit('getUser', user)
         })
         .catch(error => {
           console.log(error);
         });
     },
-    destroy(state) {
-      state.commit('destroy')
-    },
-    checkLogin(state){
-      state.commit('checkLogin')
+    destroy({
+      commit
+    }) {
+      commit('destroy')
     }
   },
   getters: {
-    getUser(state) {
-      return state.status
+    getIslogin(state) {
+      return state.isLogin
     },
-    getError(state){
+    getErr(state){
       return state.error
     }
   }

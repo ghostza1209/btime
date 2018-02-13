@@ -3,14 +3,15 @@
     <navbar></navbar>
     <div class="container-fluid">
     
-      <div v-if="getUser != 204" class="row">
+     
+      <div v-if="!$store.getters.getIslogin">
+        <login></login>
+      </div>
+       <div v-else class="row">
         <menu-left></menu-left>
         <div class="col-md-10">
           <router-view></router-view>
         </div>
-      </div>
-      <div v-else>
-        <login></login>
       </div>
     </div>
   </div>
@@ -27,17 +28,6 @@ export default {
     navbar,
     menuLeft,
     login
-  },
-  computed: {
-    loadUser() {
-      this.$store.dispatch("getUser");
-    },
-    getUser() {
-      return this.$store.getters.getUser;
-    }
-  },
-  created() { //เมื่อมีการเข้าครั้งแรก จะเรียกใช้ทันที 
-    this.loadUser;
   }
 };
 </script>

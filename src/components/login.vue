@@ -8,9 +8,11 @@
   <div class="form-group">
     <label>Password</label>
     <input type="password" class="form-control" v-model="user.password">
-    <b style="color: red" v-show="getError" class="text-center">ชื่อผู้ใช้ หรือ รหัสผ่านไม่ถูกต้อง</b>
   </div>
-  <button type="button" class="btn btn-primary"  @click="getEmp">Submit</button>
+  <div>
+  <b class="text-danger">{{ $store.getters.getErr}}</b>
+  </div>
+  <button type="button" class="btn btn-primary"  @click="login">Submit</button>
 </div>
 </template>
 <script>
@@ -24,17 +26,8 @@ export default {
     };
   },
   methods: {
-    getEmp() {
+    login() {
       this.$store.dispatch("getUser", this.user);
-    }
-  },
-  computed: {
-    checkLogin(){
-      this.$store.dispatch("checkLogin")
-    },
-    getError(){
-      this.checkLogin
-      return this.$store.getters.getError
     }
   }
 };
