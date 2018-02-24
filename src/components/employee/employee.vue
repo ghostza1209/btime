@@ -1,84 +1,90 @@
 "use strict";
 <template>
-<div class="col-sm-12">
+<div class="col-sm-12 mrgn_Top">
    <router-link to="addEmployee" class="btn btn-primary">เพิ่มพนักงาน</router-link>
   <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">tName</th>
-      <th scope="col">Username</th>
-      <th scope="col">Rate</th>
-      <th scope="col">Rate</th>      
+      <th scope="col">ชื่อ-นามสกุล</th>
+      <th scope="col">ชื่อผู้ใช้</th>
+      <th scope="col">อัตราค่าจ้าง:วัน</th>
+      <th scope="col">จัดการ</th>      
     </tr>
   </thead>
   <tbody>
     <tr v-for="(data,index) in datas">
       <th scope="row">{{index+1}}</th>
-      <td><router-link :to="{name:'editEmp',params:{id:data._id}}">{{ data.name+" "+data.lastName }}</router-link></td>
+      <td class="txtcapitalize"><router-link :to="{name:'editEmp',params:{id:data._id}}">{{data.name+" "+data.lastName }}</router-link></td>
       <td>{{data.username}}</td>
       <td>{{data.rate}}</td>
-      <td><button class="btn btn-danger" @click="del(data._id)">ลบ</button></td>
+      <td><button class="btn btn-danger" @click="confirmDel(data._id)">ลบ</button></td>
     </tr>
   </tbody>
 </table>
-  <h5 v-show="status">{{ statusAdd }}</h5>
+<h1 v-if="noEmp">{{noData}}</h1>
 </div>
 </template>
 <script>
-import axios from "axios";
+import Api from "@/config/axios-config";
+
 export default {
-  name: "employee",
-  props: {
-    statusAdd: {
-      default: ""
-    }
-  },
   data() {
     return {
       datas: [],
-      status: true
+      noEmp: false,
+      noData: ""
     };
   },
-  mounted() {
-    this.getEmployee();
+  async mounted() {
+    await Api()
+      .get("/user")
+      .then(response => {
+        if (response.data.length == 0) {
+          this.noData = "ไม่มีข้อมูลพนักงาน";
+          this.noEmp = true;
+        }
+        this.datas = response.data;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   },
   methods: {
-    getEmployee() {
-      axios
-        .get("http://localhost:3000/user")
+    del(id) {
+      Api()
+        .delete("user/" + id)
         .then(response => {
+          this.getEmployee();
+        })
+        .catch(error => {});
+    },
+    confirmDel(id) {
+      var _this = this;
+      this.$dialog
+        .confirm("ยืนยันการลบ!")
+        .then(function() {
+          _this.del(id);
+        })
+        .catch(function() {});
+    },
+    getEmployee() {
+      Api()
+        .get("/user")
+        .then(response => {
+          if (response.data.length == 0) {
+            this.noData = "ไม่มีข้อมูลพนักงาน";
+            this.noEmp = true;
+          }
           this.datas = response.data;
         })
-        .catch(error => {
-          console.log(error);
-        });
-    },
-    del(id) {
-      if (confirm("are you sure?")) {
-        axios
-          .delete("http://localhost:3000/user/" + id)
-          .then(() => {
-            this.getEmployee();
-            this.status = true;
-            this.statusAdd = "ลบข้อมูลสำเร็จ";
-          })
-          .catch(error => {
-            this.status = true;
-            this.statusAdd = "ลบข้อมูลไม่สำเร็จ";
-          });
-      }
-    }
-  },
-  watch: {
-    statusAdd: function(val) {
-      console.log("props changed");
+        .catch(err => {});
     }
   }
 };
 </script>
 <style scoped>
-div {
-  margin-top: 30px;
+table tr {
+  text-align: center;
 }
 </style>

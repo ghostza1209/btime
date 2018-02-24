@@ -1,12 +1,12 @@
 <template>
-    <nav class="navbar navbar-expand-lg  bg-dark">
-        <a class="navbar-brand" href="#"><img src="../../assets/time.png" /></a>
+    <nav class="navbar sticky-top navbar-expand-lg  bg-dark">
+        <a class="navbar-brand" href="#"><img src="../../assets/time.png" /><span class="txtTitle">ระบบลงเวลาการทำงาน</span></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
         <div class=" navbar-collapse pull-right" id="navbarNavAltMarkup">
-            <div class="navbar-nav" v-show="$store.getters.getIslogin">
-                <a class="nav-item nav-link" @click="destroy">Log out</a>
+            <div class="navbar-nav" v-show="$store.getters.getIsLogin">
+                <a class="nav-item nav-link" @click="logout"><button type="button" class="btn btn-danger">ออกจากระบบ</button></a>
             </div>
         </div>
     </nav>
@@ -15,20 +15,11 @@
 <script>
 export default {
   methods: {
-    destroy() {
-      this.$store.dispatch("destroy");
-    }
-  },
-  computed: {
-    getStatus() {
-      if (this.$store.getters.getUser !== 204) {
-        return true;
-      } else {
-        return false;
-      }
+    logout() {
+      this.$store.dispatch("logout");
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -43,5 +34,8 @@ div#navbarNavAltMarkup {
 }
 a {
   color: white;
+}
+.txtTitle{
+  margin-left: 20px;
 }
 </style>

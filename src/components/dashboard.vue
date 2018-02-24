@@ -1,12 +1,10 @@
 <template>
-  <div>
-      <h1>This is dashboard</h1>
+  <div class="text-center" style="margin-top:20vh">
+      <img width="500px" src="@/assets/TAMS.png">
   </div>
 </template>
 <script>
-export default {
-  
-}
+export default {};
 </script>
 <style>
 

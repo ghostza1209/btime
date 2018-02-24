@@ -1,20 +1,20 @@
 <template>
-   <form class="col-sm-5 offset-sm-3">
+   <form class="col-sm-5 offset-sm-3 mrgn_Top">
         <div class="form-group">
             <label for="exampleFormControlInput1">ชื่อ</label>
-            <input type="text" v-model="name" class="form-control">
+            <input type="text" v-model="name" class="form-control txtcapitalize">
         </div>
          <div class="form-group">
             <label for="exampleFormControlInput1">นามสกุล</label>
-            <input type="text" v-model="lastname" class="form-control">
+            <input type="text" v-model="lastname" class="form-control txtcapitalize">
         </div>
          <div class="form-group">
             <label for="exampleFormControlInput1">Username</label>
-            <input type="text" v-model="username" class="form-control">
+            <input type="text" v-model="username" class="form-control ">
         </div>
          <div class="form-group">
             <label for="exampleFormControlInput1">password</label>
-            <input type="password" v-model="password" class="form-control">
+            <input type="text" v-model="password" class="form-control">
         </div>
           <div class="form-group">
             <label for="exampleFormControlInput1">rate</label>
@@ -29,7 +29,8 @@
     </form>
 </template>
 <script>
-import axios from "axios";
+import Api from "@/config/axios-config";
+import bcrypt from "bcryptjs";
 export default {
   data() {
     return {
@@ -38,7 +39,8 @@ export default {
       username: "",
       password: "",
       rate: 0,
-      myId: ""
+      myId: "",
+      hash: ""
     };
   },
   mounted() {
@@ -47,10 +49,9 @@ export default {
   },
   methods: {
     get(id) {
-      axios
-        .get("http://localhost:3000/user/" + id)
+      Api()
+        .get("/user/" + id)
         .then(response => {
-          // console.log(response);
           (this.name = response.data.name),
             (this.lastname = response.data.lastName),
             (this.username = response.data.username),
@@ -62,8 +63,8 @@ export default {
         });
     },
     update() {
-      axios
-        .put("http://localhost:3000/user/" + this.myId, {
+      Api()
+        .put("/user/" + this.myId, {
           name: this.name,
           lastName: this.lastname,
           username: this.username,

@@ -103,3 +103,15 @@ body {
 .border-bottom {
     border-bottom: 1px solid #e5e5e5;
 }
+
+.mrgn_Top{
+    margin-top: 20px;
+}
+.txtcapitalize{
+    text-transform: capitalize !important;
+}
+p.title{
+    font-size: 3.05em;
+    font-weight: bolder;
+}
+.text-center{text-align: center !important;}

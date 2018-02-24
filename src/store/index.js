@@ -1,69 +1,57 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
 import router from '@/router'
 
 
 Vue.use(Vuex)
 
-
 export const store = new Vuex.Store({
   strict: true,
   state: {
-    user: null,
-    error: null,
-    token: null,
-    isLogin: false
+    isLogin: false,
+    username: "",
+    type: 0,
+    _id: ""
   },
   mutations: {
-    setUser(state, data) {
-      state.user = data
-      state.isLogin = true
+    isLogin(state, data) {
+      state.isLogin = data.auth,
+        state.username = data.username,
+        state.type = data.type,
+        state._id = data._id
     },
-    destroy(state) {
-      state.user = null,
-        state.isLogin = false
-      window.location.href = "/"
-    },
-    hasErr(state, err) {
-      state.error = err
+    logout(state) {
+      state.isLogin = false,
+        state.username = "",
+        state.type = "",
+        state._id = ""
     }
   },
   actions: {
-    async getUser({
+    isLogin({
       commit
     }, payload) {
-      const response = await axios
-        .post("http://localhost:3000/login", payload)
-        .then(response => {
-
-          if (response.data.error) {
-            const err = response.data.error
-            commit('hasErr', err)
-          } else {
-            const user = {
-              username: response.data.username,
-              password: response.data.password
-            }
-            commit('setUser', user)
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        });
+      commit('isLogin', payload)
     },
-    destroy({
+    logout({
       commit
     }) {
-      commit('destroy')
+      commit('logout')
     }
   },
   getters: {
-    getIslogin(state) {
+    getIsLogin(state) {
       return state.isLogin
     },
-    getErr(state){
-      return state.error
+    getUsername(state) {
+      return state.username
+    },
+    getType(state) {
+      return state.type
+    },
+    getId(state) {
+      return state._id
     }
+
   }
 })

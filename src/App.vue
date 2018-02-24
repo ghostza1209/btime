@@ -2,17 +2,16 @@
   <div id="app">
     <navbar></navbar>
     <div class="container-fluid">
-    
-     
-      <div v-if="!$store.getters.getIslogin">
+    <div v-if="!$store.getters.getIsLogin">
         <login></login>
       </div>
-       <div v-else class="row">
+       <div v-if="$store.getters.getIsLogin && $store.getters.getType==1" class="row">
         <menu-left></menu-left>
         <div class="col-md-10">
           <router-view></router-view>
         </div>
       </div>
+      <attend v-if="$store.getters.getIsLogin && $store.getters.getType!=1"></attend>
     </div>
   </div>
 </template>
@@ -21,13 +20,15 @@
 import navbar from "@/components/nav/navbar";
 import menuLeft from "@/components/nav/mnLeft";
 import login from "@/components/login";
+import attend from "@/components/attend/empAttend";
 
 export default {
   name: "App",
   components: {
     navbar,
     menuLeft,
-    login
+    login,
+    attend
   }
 };
 </script>

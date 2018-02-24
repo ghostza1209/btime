@@ -1,36 +1,43 @@
 <template>
-    <form class="col-sm-5 offset-sm-3">
+    <form class="col-sm-5 offset-sm-3 mrgn_Top">
+       <div v-for="(value) in this.err" class="alert alert-danger">{{value.msg}}</div>
+
         <div class="form-group">
-            <label for="exampleFormControlInput1">ชื่อ</label>
-            <input type="text" v-model="name" class="form-control" placeholder="">
+            <label >ชื่อ</label>
+            <input autocomplete="off" type="text" name="name" v-model="name" class="form-control txtcapitalize">
         </div>
          <div class="form-group">
-            <label for="exampleFormControlInput1">นามสกุล</label>
-            <input type="text" v-model="lastname" class="form-control" placeholder="">
+            <label >นามสกุล</label>
+            <input autocomplete="off" type="text" name="lastname" v-model="lastname" class="form-control txtcapitalize">
         </div>
          <div class="form-group">
-            <label for="exampleFormControlInput1">Username</label>
-            <input type="text" v-model="username" class="form-control" placeholder="">
+            <label>Username</label>
+            <input autocomplete="off" type="text" name="username" v-model="username" class="form-control">
         </div>
          <div class="form-group">
-            <label for="exampleFormControlInput1">password</label>
-            <input type="password" v-model="password" class="form-control" placeholder="">
+            <label>Password</label>
+            <input autocomplete="off" type="password" name="password" v-model="password" class="form-control">
         </div>
           <div class="form-group">
-            <label for="exampleFormControlInput1">rate</label>
-            <input type="number" v-model="rate" class="form-control" placeholder="">
+            <label >Confirm-password</label>
+            <input autocomplete="off" type="password" name="confirmPass" v-model="confirmPass" class="form-control">
+        </div>
+          <div class="form-group">
+            <label >Rate</label>
+            <input autocomplete="off" type="number" v-model="rate" class="form-control">
         </div>
         <div class="form-group">
-            <button class="btn btn-success" @click="saveEmp">
+            <button class="btn btn-success" @click.prevent="saveEmp">
                 บันทึกข้อมูล
             </button>
         </div>
- 
+
     </form>
+
 </template>
 
 <script>
-import axios from "axios";
+import Api from "@/config/axios-config";
 export default {
   data() {
     return {
@@ -38,22 +45,32 @@ export default {
       lastname: "",
       username: "",
       password: "",
-      rate: 0
+      confirmPass: "",
+      rate: 0,
+      err: null
     };
   },
   methods: {
-    saveEmp() {
-      axios
-        .post("http://localhost:3000/user", {
+    saveEmp: function() {
+      Api()
+        .post("/user", {
           name: this.name,
-          lastName: this.lastname,
+          lastname: this.lastname,
           username: this.username,
           password: this.password,
-          rate: this.rate
+          confirmPass: this.confirmPass,
+          rate: this.rate,
+          provider: "local"
         })
         .then(response => {
-          this.$router.push({name: 'employee', params: {statusAdd: 'เพิ่มข้อมูลสำเร็จแล้ว'}});
-          // console.log(response);
+          if (response.data !== 1) {
+            this.err = response.data;
+          } else {
+            this.$router.push({
+              name: "employee",
+              params: { statusAdd: "เพิ่มข้อมูลสำเร็จแล้ว" }
+            });
+          }
         })
         .catch(error => {
           console.log(error);
@@ -64,7 +81,4 @@ export default {
 </script>
 
 <style scoped>
-form {
-  margin-top: 20px;
-}
 </style>
