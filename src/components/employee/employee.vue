@@ -1,11 +1,14 @@
 "use strict";
 <template>
 <div class="col-sm-12 mrgn_Top">
+
+  <h1>{{statusAdd}}</h1>
    <router-link to="addEmployee" class="btn btn-primary">เพิ่มพนักงาน</router-link>
   <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">รูป</th>      
       <th scope="col">ชื่อ-นามสกุล</th>
       <th scope="col">ชื่อผู้ใช้</th>
       <th scope="col">อัตราค่าจ้าง:วัน</th>
@@ -15,6 +18,9 @@
   <tbody>
     <tr v-for="(data,index) in datas">
       <th scope="row">{{index+1}}</th>
+      <th scope="row">
+        <img class="profileImage" :src="(typeof data.profileImage !=='undefined')?`${url}${subStr(String(data.profileImage))}`:url+'noImage.jpg'">
+        </th>      
       <td class="txtcapitalize"><router-link :to="{name:'editEmp',params:{id:data._id}}">{{data.name+" "+data.lastName }}</router-link></td>
       <td>{{data.username}}</td>
       <td>{{data.rate}}</td>
@@ -22,13 +28,14 @@
     </tr>
   </tbody>
 </table>
-<h1 v-if="noEmp">{{noData}}</h1>
+<h1 class="text-center" v-if="noEmp">{{noData}}</h1>
 </div>
 </template>
 <script>
 import Api from "@/config/axios-config";
-
+import siteConfig from "@/mixins/siteConfig";
 export default {
+  props: ['statusAdd'],
   data() {
     return {
       datas: [],
@@ -36,7 +43,7 @@ export default {
       noData: ""
     };
   },
-  async mounted() {
+  async created() {
     await Api()
       .get("/user")
       .then(response => {
@@ -55,6 +62,7 @@ export default {
       Api()
         .delete("user/" + id)
         .then(response => {
+          // console.log(response)
           this.getEmployee();
         })
         .catch(error => {});
@@ -80,11 +88,20 @@ export default {
         })
         .catch(err => {});
     }
-  }
+  },
+  mixins: [siteConfig]
 };
 </script>
 <style scoped>
 table tr {
   text-align: center;
+}
+.profileImage {
+  width: 150px;
+  height: 150px;
+}
+.table td,
+.table th {
+  vertical-align: middle;
 }
 </style>

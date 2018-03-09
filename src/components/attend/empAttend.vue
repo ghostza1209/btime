@@ -16,7 +16,7 @@
               <option v-for="(data,index) in workPlace" :key="index" :value="data._id">{{showWorkPlaceFormat(data.projectName,data.villaName,data.district)}}</option>
     </select>
     </div>
-      <div v-if="isMorethan('14:30')" class="form-group">
+      <div v-if="!isMorethan('14:30')" class="form-group">
     <label>ลงเวลาออกงาน</label>
     <input v-model="timeOut" name="timeOut" type="time" class="form-control" :disabled="isMorethan('20:00')"> 
   </div>
@@ -86,25 +86,25 @@ export default {
       return projectName + " " + villaName + " " + district;
     },
     saveAttend() {
-      if (this.timeNow() < "15:00") {
-        Api()
-          .post("/attend", {
-            id: this.empId,
-            timeIn: this.timeIn,
-            timeOut: 0,
-            whereWork: this.whereWork
-          })
-          .then(response => {
-            if (response.data !== 1) {
-              this.err = response.data;
-            } else {
-              window.alert("ลงเวลาเข้างานสำเร็จ");
-            }
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      } else if (this.timeNow() > "14:59") {
+      // if (this.timeNow() < "15:00") {
+      //   Api()
+      //     .post("/attend", {
+      //       id: this.empId,
+      //       timeIn: this.timeIn,
+      //       timeOut: 0,
+      //       whereWork: this.whereWork
+      //     })
+      //     .then(response => {
+      //       if (response.data !== 1) {
+      //         this.err = response.data;
+      //       } else {
+      //         window.alert("ลงเวลาเข้างานสำเร็จ");
+      //       }
+      //     })
+      //     .catch(err => {
+      //       console.log(err);
+      //     });
+      // } else if (this.timeNow() > "14:59") {
         Api()
           .put("/attend/" + this.attendId, {
             offTime: this.timeOut
@@ -116,7 +116,7 @@ export default {
             window.alert("ลงเวลาออกงานสำเร็จ");
           })
           .catch(err => {});
-      }
+      // }
     },
     getAttendById(id) {
       Api()

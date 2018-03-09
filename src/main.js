@@ -8,7 +8,6 @@ import {
 } from './store/'
 import VueCookies from 'vue-cookies'
 import VuejsDialog from "vuejs-dialog"
-
 // Tell Vue to install the plugin.
 Vue.use(VuejsDialog, {
   html: true,
