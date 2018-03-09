@@ -1,19 +1,23 @@
 <template>
    <form class="col-sm-5 offset-sm-3 mrgn_Top">
+     <div class="form-group">
+       <label for=""></label>
+       <img class="img-fluid" id="barcode"/>
+     </div>
         <div class="form-group">
-            <label for="exampleFormControlInput1">ชื่อ</label>
+            <label>ชื่อ</label>
             <input type="text" v-model="name" class="form-control txtcapitalize">
         </div>
          <div class="form-group">
-            <label for="exampleFormControlInput1">นามสกุล</label>
+            <label>นามสกุล</label>
             <input type="text" v-model="lastname" class="form-control txtcapitalize">
         </div>
          <div class="form-group">
-            <label for="exampleFormControlInput1">Username</label>
+            <label >Username</label>
             <input type="text" v-model="username" class="form-control ">
         </div>
          <div class="form-group">
-            <label for="exampleFormControlInput1">password</label>
+            <label>password</label>
             <input type="text" v-model="password" class="form-control">
         </div>
           <div class="form-group">
@@ -35,7 +39,7 @@
 <script>
 import Api from "@/config/axios-config";
 import siteConfig from "@/mixins/siteConfig";
-
+import JsBarcode from "jsbarcode";
 export default {
   data() {
     return {
@@ -52,6 +56,8 @@ export default {
   mounted() {
     this.myId = this.$route.params.id;
     this.get(this.myId);
+    //Create barcode
+    JsBarcode("#barcode", this.myId);
   },
   methods: {
     get(id) {

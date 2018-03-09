@@ -3,7 +3,7 @@
 <div class="col-sm-12 mrgn_Top">
 
   <h1>{{statusAdd}}</h1>
-   <router-link to="addEmployee" class="btn btn-primary">เพิ่มพนักงาน</router-link>
+   <router-link to="/addemployee" class="btn btn-primary">เพิ่มพนักงาน</router-link>
   <table class="table">
   <thead>
     <tr>

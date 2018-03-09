@@ -18,6 +18,7 @@ Vue.use(VuejsDialog, {
 })
 Vue.config.productionTip = false
 Vue.use(VueCookies)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

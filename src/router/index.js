@@ -7,7 +7,6 @@ import dashboard from '@/components/dashboard'
 import attend from '@/components/attend/attend'
 import workPlace from '@/components/workPlace/workPlace'
 import addWorkplace from '@/components/workPlace/addWorkplace'
-
 Vue.use(Router)
 
 export default new Router({
@@ -18,7 +17,6 @@ export default new Router({
     },
     {
       path: '/employee',
-      name: 'employee',
       component: employee,
       props: true
     },
