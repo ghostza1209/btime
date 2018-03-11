@@ -3,9 +3,9 @@
   <h1 class="text-center">{{dateNow()}}</h1>
   <p class=" text-center">ลงเวลาเข้างานแล้ว {{count}} คน</p>
   <div class="col-sm-4 offset-4">
-  <input  id="bc" type="text" class="form-control" @change="attendTime" placeholder="กรอกรหัสพนักงานตรงนี้">
+  <input  id="bc" type="text" class="form-control" @change="checkOut" placeholder="กรอกรหัสพนักงานตรงนี้">
   <small>*กรอกรหัสพนักงาน หรือ ใช้ปืนยิงบาร์โค้ด</small>
-  <p class="notiMsg" v-if="attendTimeResponse">{{attendTimeMessage}}</p>
+  <p class="notiMsg" v-if="checkOutResponse">{{checkOutMessage}}</p>
   </div>
 <table class="table mrgn_Top">
   <thead class="thead-light">
@@ -13,7 +13,7 @@
       <th scope="col">#</th>
       <th scope="col">รูป</th>
       <th scope="col">ชื่อ-นามสกุล</th>
-      <th scope="col">เวลาเข้างาน</th>
+      <th scope="col">เวลาออกงาน</th>
       <!-- <th scope="col">เวลาออกงาน</th> -->
     </tr>
   </thead>
@@ -24,7 +24,7 @@
       <th><img class="profileImage" :src="(typeof data.profileImage !=='undefined')?`${url}${subStr(String(data.profileImage))}`:url+'noImage.jpg'"></th>
       <td>{{data.user.name+" "+data.user.lastName}}</td>
       <td>
-        {{data.attendTime}}  
+        {{data.checkOutTime}}  
       </td>
       <!-- <td>
          {{data.workPlace.projectName+" "+data.workPlace.villaName}}
@@ -53,8 +53,8 @@ export default {
       datas: [],
       count: 0,
       message: String,
-      attendTimeMessage: String,
-      attendTimeResponse: false
+      checkOutMessage: String,
+      checkOutResponse: false
     };
   },
   mounted() {
@@ -65,17 +65,15 @@ export default {
     setFocus: function(id) {
       document.getElementById(id).focus();
     },
-    attendTime: function(event) {
+    checkOut: function(event) {
       let id = event.target.value;
       Api()
-        .post("/attend", {
+        .post("/checkOut", {
           id: id
         })
         .then(response => {
-          this.attendTimeMessage = response.data.message;
-          this.attendTimeResponse = true;
-          // this.datas = response.data.attend;
-          // this.count = response.data.count;
+          this.checkOutMessage = response.data.message;
+          this.checkOutResponse = true;
           event.target.value = "";
           this.calAttendInDay();
         })
@@ -83,7 +81,7 @@ export default {
     },
     calAttendInDay: function() {
       Api()
-        .get("/attend")
+        .get("/checkOut")
         .then(response => {
           this.message = response.data.message;
           this.datas = response.data.attend;

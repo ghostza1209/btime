@@ -1,3 +1,4 @@
+import moment from "moment";
 export default {
   data() {
     return {
@@ -7,6 +8,10 @@ export default {
   methods: {
     subStr(str) {
       return str.replace("public", "");
+    },
+    dateNow() {
+      moment.locale("th");
+      return moment(this.date, "YYYYMMDD").format("LLLL");
     }
   }
 

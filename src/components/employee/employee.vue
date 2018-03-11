@@ -3,7 +3,7 @@
 <div class="col-sm-12 mrgn_Top">
 
   <h1>{{statusAdd}}</h1>
-   <router-link to="/addemployee" class="btn btn-primary">เพิ่มพนักงาน</router-link>
+   <router-link to="addEmployee" class="btn btn-primary">เพิ่มพนักงาน</router-link>
   <table class="table">
   <thead>
     <tr>
@@ -35,7 +35,7 @@
 import Api from "@/config/axios-config";
 import siteConfig from "@/mixins/siteConfig";
 export default {
-  props: ['statusAdd'],
+  props: ["statusAdd"],
   data() {
     return {
       datas: [],
@@ -93,15 +93,4 @@ export default {
 };
 </script>
 <style scoped>
-table tr {
-  text-align: center;
-}
-.profileImage {
-  width: 150px;
-  height: 150px;
-}
-.table td,
-.table th {
-  vertical-align: middle;
-}
 </style>

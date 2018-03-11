@@ -7,9 +7,15 @@ import dashboard from '@/components/dashboard'
 import attend from '@/components/attend/attend'
 import workPlace from '@/components/workPlace/workPlace'
 import addWorkplace from '@/components/workPlace/addWorkplace'
-Vue.use(Router)
+import checkOut from '@/components/attend/checkOut'
 
+Vue.use(Router)
+const Default = {
+  template: '<div>default</div>'
+}
 export default new Router({
+  mode: 'history',
+  base: '/',
   routes: [{
       path: '/',
       name: 'dashboard',
@@ -34,6 +40,11 @@ export default new Router({
       path: '/attend',
       name: 'attend',
       component: attend
+    },
+    {
+      path: '/checkOut',
+      name: 'checkOut',
+      component: checkOut
     },
     {
       path: '/workPlace',
