@@ -26,10 +26,20 @@
       <label>Rate</label>
       <input type="number" v-model="rate" class="form-control">
     </div>
-       <div class="form-group">
+      <!-- <div class="form-group">
       <label>รูปภาพ</label>
       <input  type="file" class="form-control" @change="onFileSelected">
-    </div>
+    </div> -->
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">รูปภาพ</span>
+  </div>
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" @change="onFileSelected">
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  </div>
+</div>
+
     <div class="form-group">
       <button class="btn btn-success" @click.prevent="saveEmp">
         บันทึกข้อมูล

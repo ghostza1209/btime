@@ -1,6 +1,6 @@
 import moment from "moment";
 export default {
-  data() {
+  data: function () {
     return {
       url: process.env.API_URL
     }
@@ -11,7 +11,7 @@ export default {
     },
     dateNow() {
       moment.locale("th");
-      return moment(this.date, "YYYYMMDD").format("LLLL");
+      return moment(new Date(), "YYYYMMDD").format("LLLL");
     }
   }
 

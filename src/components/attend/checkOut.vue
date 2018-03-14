@@ -1,7 +1,7 @@
 <template>
 <div class="mrgn_Top">
   <h1 class="text-center">{{dateNow()}}</h1>
-  <p class=" text-center">ลงเวลาเข้างานแล้ว {{count}} คน</p>
+  <p class=" text-center">ลงเวลาออกงานแล้ว {{count}} คน</p>
   <div class="col-sm-4 offset-4">
   <input  id="bc" type="text" class="form-control" @change="checkOut" placeholder="กรอกรหัสพนักงานตรงนี้">
   <small>*กรอกรหัสพนักงาน หรือ ใช้ปืนยิงบาร์โค้ด</small>
