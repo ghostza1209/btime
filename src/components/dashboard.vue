@@ -78,7 +78,7 @@ export default {
 </script>
 <style scoped>
 .mini{
-  width: 70px;
+  width: 100px;
   height: 70px;
 }
 </style>
