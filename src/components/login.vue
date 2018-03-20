@@ -20,8 +20,7 @@
 </template>
 <script>
 import user from "@/controller/user";
-import axios from "axios";
-
+import Api from "@/config/axios-config";
 export default {
   data() {
     return {
@@ -31,8 +30,8 @@ export default {
   },
   methods: {
     login() {
-      axios
-        .post("http://localhost:3000/login", {
+      Api()
+        .post("/login", {
           username: this.username,
           password: this.password
         })

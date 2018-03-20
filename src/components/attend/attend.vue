@@ -21,7 +21,7 @@
     
      <tr v-for="(data,index) in datas" :key="index">
       <th scope="row">{{index+1}}</th>
-      <th><img class="profileImage" :src="(typeof data.profileImage !=='undefined')?`${url}${subStr(String(data.profileImage))}`:url+'noImage.jpg'"></th>
+      <th><img class="profileImage" :src="(typeof data.user.profileImage !=='undefined')?`${url}${subStr(String(data.user.profileImage))}`:url+'noImage.jpg'"></th>
       <td>{{data.user.name+" "+data.user.lastName}}</td>
       <td>
         {{data.attendTime}}  
@@ -81,15 +81,17 @@ export default {
         })
         .catch(err => {});
     },
-    calAttendInDay: function() {
-      Api()
+    calAttendInDay: async function() {
+      await Api()
         .get("/attend")
         .then(response => {
           this.message = response.data.message;
           this.datas = response.data.attend;
           this.count = response.data.count;
         })
-        .catch(err => {});
+        .catch(err => {
+          console.log(err);
+        });
     }
   },
   mixins: [siteConfig]

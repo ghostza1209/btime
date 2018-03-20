@@ -21,7 +21,7 @@
     
      <tr v-for="(data,index) in datas" :key="index">
       <th scope="row">{{index+1}}</th>
-      <th><img class="profileImage" :src="(typeof data.profileImage !=='undefined')?`${url}${subStr(String(data.profileImage))}`:url+'noImage.jpg'"></th>
+      <th><img class="profileImage" :src="(typeof data.user.profileImage !=='undefined')?`${url}${subStr(String(data.user.profileImage))}`:url+'noImage.jpg'"></th>
       <td>{{data.user.name+" "+data.user.lastName}}</td>
       <td>
         {{data.checkOutTime}}  
@@ -66,18 +66,20 @@ export default {
       document.getElementById(id).focus();
     },
     checkOut: function(event) {
-      let id = event.target.value;
-      Api()
-        .post("/checkOut", {
-          id: id
-        })
-        .then(response => {
-          this.checkOutMessage = response.data.message;
-          this.checkOutResponse = true;
-          event.target.value = "";
-          this.calAttendInDay();
-        })
-        .catch(err => {});
+      new Promise((resolve, reject) => {
+        let id = event.target.value;
+        Api()
+          .post("/checkOut", {
+            id: id
+          })
+          .then(response => {
+            this.checkOutMessage = response.data.message;
+            this.checkOutResponse = true;
+            event.target.value = "";
+            this.calAttendInDay();
+          })
+          .catch(err => {});
+      });
     },
     calAttendInDay: function() {
       Api()
