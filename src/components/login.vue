@@ -24,8 +24,8 @@ import Api from "@/config/axios-config";
 export default {
   data() {
     return {
-      username: "yoss",
-      password: "123456"
+      username: "",
+      password: ""
     };
   },
   methods: {

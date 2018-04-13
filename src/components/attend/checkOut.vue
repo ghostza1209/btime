@@ -88,6 +88,7 @@ export default {
           this.message = response.data.message;
           this.datas = response.data.attend;
           this.count = response.data.count;
+          // console.log(response.data)
         })
         .catch(err => {});
     }

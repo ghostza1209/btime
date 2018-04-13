@@ -4,6 +4,10 @@
        <label for=""></label>
        <img class="img-fluid" id="barcode"/>
      </div>
+     <div class="form-group">
+       <label>รหัสพนักงาน</label>
+       <p class="txtMarker">{{myId}}</p>
+     </div>
         <div class="form-group">
             <label>ชื่อ</label>
             <input type="text" v-model="name" class="form-control txtcapitalize">
@@ -99,5 +103,4 @@ export default {
 };
 </script>
 <style scoped>
-
 </style>
